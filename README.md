@@ -7,6 +7,30 @@
 
 [Changelog file](changelog.md)
 
+## Table of contents
+- [Tagion 0.9.0 Release](#tagion-0.9.0-release)
+  - [Table of contents](#table-of-contents)
+- [Simple guide ](#simple-guide)
+  - [Pre-installation](#pre-installation)
+  - [Create network structure](#create-network-structure)
+  - [Launch a network](#launch-a-network)
+  - [Make a transaction](#make-a-transaction)
+    - [Create an invoice](#create-an-invoice) 
+    - [Update the balance](#update-the-balance)
+    - [Make a payment](#make-a-payment)
+- [Advanced guide](#advanced-guide)
+  - [Preconditions](#preconditions)
+    - [Docker usage](#docker-usage)
+    - [Binary usage](#binary-usage)
+  - [tagionwave CLI](#tagionwave-cli)
+  - [tagionwallet CLI](#tagionwallet-cli)
+  - [The payment request](#the-payment-reques) 
+  - [Tagionboot CLI](#tagionboot-cli) 
+  - [Dartutil CLI](#dartutil-cli) 
+  - [The network setup](#the-network-setup)
+- [Report an issue](#report-an-issue)
+
+
 ## Simple guide
 Tagion scripts were tested on Ubuntu 18.04 and Ubuntu 20.04.
 To be able to run our network and use scripts, please set up the Docker app.
@@ -50,7 +74,7 @@ If you want to stop a mode1, just run `../stop_docker.sh`.
 ### Make a transaction
 To start making a transaction, we need to create an invoice in the receiver wallet first. Next, we need to update the balance on the sender, create and send a payment contract to pay an invoice and update the balance on both wallets.
 Let's do it:
-#### Create invoice
+#### Create an invoice
 ```
 ../wallet.sh wallet_1 tagionwallet --create-invoice Test:55 --pin 0001
 ```
@@ -58,7 +82,7 @@ Let's do it:
 
 `--create-invoice LABEL:AMOUNT` this command will create an `invoice_file.hibon`.
 
-#### Update balance
+#### Update the balance
 ```
 ../wallet.sh wallet_2 tagionwallet --update --amount --pin 0002 --port 10801
 ```
@@ -86,7 +110,7 @@ If it doesn't work - you can find help in our [Discord channel](https://discord.
 
 
 ## Advanced guide
-This guideline contains instructions if you want to use CLI directly, not via scripts. It has many more possible test scenarios. 
+This guideline contains instructions if you want to use CLI directly, not via scripts. It has much more possible test scenarios. 
 
 ### Preconditions
 Tagion CLI tools were tested only on Ubuntu 18.04 and Ubuntu 20.04.
@@ -117,7 +141,7 @@ There are the following CLI tools available here:
 
 #### Binary usage
 
-For binary usage - download tagion binary from release tab. Tagion binary contains all the other binaries. For better UX - you can create softlinks with next commands: 
+For binary usage - download tagion binary from the release tab. Tagion binary contains all the other binaries. For better UX - you can create soft links with the following commands: 
 ```
 ln -s ${PWD}/tagion ${PWD}/tagionwave
 ln -s ${PWD}/tagion ${PWD}/tagionwallet
@@ -135,17 +159,17 @@ There are the following modes to run the network:
 * Mode 3 - the mode 2 + swap in and out.
 
 `--net-mode=` set in witch mode to run a network: `internal` - mode0, `local` - mode1.
-`--dart-init` flag shows if it's necessary to set a new Dart database. If set it as `true`, the new Dart database will be created. If the database is already created, it will be rewritten to a new empty Dart database with this command, and all the previous data will be lost.
-`--dart-synchronize` flag identify if node needs to synchronize database. For master node - set `false`.
-`--dart-path="/data/%dir%/dart.drt"` set a path to database where `%dir%` will be replaced in mode0 with nodeN (N - node number). 
+`--dart-init` flag shows if it's necessary to set a new Dart database. If it is set as `true`, the new Dart database will be created. If the database is already created, it will be rewritten to a new empty Dart database with this command, and all the previous data will be lost.
+`--dart-synchronize` flag identify if the node needs to synchronize database. For the master node - set `false`.
+`--dart-path="/data/%dir%/dart.drt"` set a path to the database where `%dir%` will be replaced in mode0 with nodeN (N - node number). 
 `--boot` set a path to shared file (used only in mode1).
 `--port` set a port for inter-node communication.
-`--transaction-port=10800` set a port for connection with wallet
-`--logger-filename` set a path to logger file.
+`--transaction-port=10800` set a port for connection with the wallet.
+`--logger-filename` set a path to the logger file.
 Use `tagionwave --help` to see all the parameters.
 ### tagionwallet CLI
 
-To create the Dart database containing some tagions, it's necessary to generate a wallet first.
+To create the Dart database containing some tagions, generating a wallet first is necessary.
 The wallet can be generated via the command line or UI application.
 
 **To generate the tagionwallet via command line, complete the following steps:**
@@ -174,7 +198,7 @@ After wallet creation, the payment request can be generated with
 
 
 ### Tagionboot CLI
-The tagionboot is used to convert the payment requet with tagion amount to the Dart database recorder file.
+The tagionboot is used to convert the payment request with tagion amount to the Dart database recorder file.
 
 Use  `tagionboot invoice_file.hibon -o genesis.hibon`command to do it.
 
@@ -208,8 +232,8 @@ The transaction will be executed 10-15 seconds after the contract is sent to the
 After the wallet update, the amount of tagions sent will be available there.
 
 ## Report an issue
-If you face a problem with the network - you can [open an issue](https://github.com/tagion/core-playnet/issues) or contact us in the development thread in [discord](https://discord.gg/x7Wcg26E). 
+If you face a problem with the network - you can [open an issue](https://github.com/tagion/core-playnet/issues) or contact us in the development thread in [Discord](https://discord.gg/x7Wcg26E). 
 To provide maximum information in this issue - you can provide a: 
 - whole network directory (create an archive from `./tagion_network`)
 - command history (type in console `history > console_history.log`)
-- netowork logs (`./tagion_network/shared/`)
+- network logs (`./tagion_network/shared/`)
