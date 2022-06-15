@@ -103,7 +103,10 @@ After ~10-15 seconds, you can update your balance to check the transaction's com
 ../wallet.sh wallet_1 tagionwallet --update --amount --pin 0001 --port 10801
 ```
 > You may notice that sender sends more tagions - it's a fee's
-> 
+> Fixed fee = 50 TGN
+> Storage fee = 1 TGN / 200 per stored byte
+> Provided fee is only for testing purpose 
+>
 If you see that balance has changed - congratulations :tada::tada::tada:. 
 If it doesn't work - you can find help in our [Discord channel](https://discord.gg/x7Wcg26E)  or report an issue on GitHub [Report Issue](#report-an-issue).
 
