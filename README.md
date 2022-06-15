@@ -92,7 +92,7 @@ Let's do it:
 Now you can see how much TGN you have on your account.
 #### Make a payment
 ```
-../wallet.sh wallet_2 tagionwallet --pay ../wallet_1/invoice_hibon.sh --send --pin 0002 --port 10801
+../wallet.sh wallet_2 tagionwallet --pay ../wallet_1/invoice_file.hibon --send --pin 0002 --port 10801
 ```
 With `--pay ../wallet_1/invoice_file.hibon`, we specify the preferred invoice to pay, so it will generate a payment contract. Parameter `--send ` will just send a contract to the network.
 
@@ -133,7 +133,7 @@ To run a single command, use:
 
 There are the following CLI tools available here:
 
-* datrutil
+* dartutil
 * hibonutil
 * tagionboot
 * tagionwallet
