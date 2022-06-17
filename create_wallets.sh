@@ -4,7 +4,7 @@ wallets_number=${1:-$default_wallets_num}
 tool_precommand="docker run --rm -v \${PWD}:/tgn/node tagion/playnet "
 docker=$2
 correct_command() {
-    if [ $docker == "--nodocker" ]; then 
+    if [[ $docker == "--nodocker" ]]; then 
        echo ""
     else
        echo ${tool_precommand//"\${PWD}"/${PWD}}
