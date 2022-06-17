@@ -5,7 +5,7 @@
 > 
 > The network itself consists of a **gossip protocol,** which is used for data synchronization, the **hashgraph algorithm**, which provides consensus and ordering transactions, and the **sharding** **opportunity,** which lets transactions run in parallel and enhances the speed of the system.
 
-[Changelog file](changelog.md)
+#### [Changelog file](changelog.md)
 
 ## Table of contents
 - [Tagion 0.9.0 Release](#tagion-0.9.0-release)
@@ -36,6 +36,8 @@ Tagion scripts were tested on Ubuntu 18.04 and Ubuntu 20.04.
 To be able to run our network and use scripts, please set up the Docker app.
 If you're unfamiliar with Docker, follow the [Getting Started With Docker guide](https://www.docker.com/get-started/) first.
 
+You can also follow next sections without docker, but then you need to install cli-tools localy. For this follow [Binary usage](#binary-usage) guide first
+
 ### Pre-installation 
 After installing the Docker app, open the terminal and enter the following commands to pull the necessary data.
 
@@ -46,13 +48,23 @@ cd core-playnet
 ```
 
 ### Create network structure
-Run the `create_wallets.sh` script to create a set of wallets and fulfilled the database. By default, 7 wallets with pin code 000N (N-wallet number) and an initial 100_000 TGN will be generated. Please use the appropriate argument to set up some different numbers of wallets. 
+First you need to create a set of N wallets and fulfill the database. If you don't provide N, by default, 7 wallets with pin code 000N (N-wallet number) and an initial 100_000 TGN will be generated.
+
+You can do it by running `create_wallets.sh` for N wallets using docker:
+```
+create_wallets.sh N
+```
+or without docker:
+```
+create_wallets.sh N --nodocker
+```
+Then go to newly created directory: 
 ```
 cd tagion_network
 ```
-In this directory, you can find N wallets. Also, it contains a data directory for the database and a shared directory for synchronizing nodes in mode1. 
+Here you can find wallets, data directory for the database and shared directory for synchronizing nodes in mode1. 
 
-If you want to clean everything in the tagion_network directory, just run `clean_tagion.sh`.
+If you want to remove tagion_network directory, just run `clean_tagion.sh`.
 
 ### Launch a network
 You can run a network in 2 modes: 
@@ -63,24 +75,41 @@ The`launch. sh N --mode1 --gnome` command starts the network with N nodes.
 For mode1, it is necessary to provide a terminal mode as well: `--gnome` or `--screen`. Gnome is the default for ubuntu, so it's easy to run. But `screen` is recommended because you don't need to run multiple consoles. 
 > To install screen, run `sudo apt-get install screen`.
 
-Let's launch a network in mode1 with the default gnome terminal: 
+Let's launch a network in mode1 with N nodes with the default gnome terminal: 
 ```
-../launch.sh 5 --mode1 --gnome
+../launch.sh N --mode1 --gnome
 ```
-Now you can see 5 terminals opened - each terminal is a separate node.
+You can also launch network in mode1 without docker: 
+```
+../launch.sh N --mode1 --gnome --nodocker
+```
+Now you can see N terminals opened - each terminal is a separate node.
 
 If you want to stop a mode1, just run `../stop_docker.sh`.
+For `--nodocker` option you can stop a network with next command: 
+```
+killall -r tagionwave -9
+```
 
 ### Make a transaction
 To start making a transaction, we need to create an invoice in the receiver wallet first. Next, we need to update the balance on the sender, create and send a payment contract to pay an invoice and update the balance on both wallets.
 Let's do it:
 #### Create an invoice
 ```
-../wallet.sh wallet_1 tagionwallet --create-invoice Test:55 --pin 0001
+../wallet.sh wallet_1 tagionwallet --create-invoice Test:10000 --pin 0001
 ```
 `../wallet.sh wallet_N` it runs a command in the correct wallet folder.
 
+
 `--create-invoice LABEL:AMOUNT` this command will create an `invoice_file.hibon`.
+
+To run it without docker you need simply move to wallet directory and run command without script: 
+
+```
+    cd wallet_1
+    tagionwallet --create-invoice Test:10000 --pin 0001
+    cd ../
+```
 
 #### Update the balance
 ```
@@ -103,10 +132,7 @@ After ~10-15 seconds, you can update your balance to check the transaction's com
 ../wallet.sh wallet_1 tagionwallet --update --amount --pin 0001 --port 10801
 ```
 > You may notice that sender sends more tagions - it's a fee's
-> Fixed fee = 50 TGN
-> Storage fee = 1 TGN / 200 per stored byte
-> Provided fee is only for testing purpose 
->
+> 
 If you see that balance has changed - congratulations :tada::tada::tada:. 
 If it doesn't work - you can find help in our [Discord channel](https://discord.gg/x7Wcg26E)  or report an issue on GitHub [Report Issue](#report-an-issue).
 
@@ -144,7 +170,8 @@ There are the following CLI tools available here:
 
 #### Binary usage
 
-For binary usage - download tagion binary from the release tab. Tagion binary contains all the other binaries. For better UX - you can create soft links with the following commands: 
+For binary usage - download tagion binary from the release tab. Tagion binary contains all the other binaries. For better user experience - you can create soft links with the following commands: 
+
 ```
 ln -s ${PWD}/tagion ${PWD}/tagionwave
 ln -s ${PWD}/tagion ${PWD}/tagionwallet
@@ -152,6 +179,26 @@ ln -s ${PWD}/tagion ${PWD}/hibonutil
 ln -s ${PWD}/tagion ${PWD}/dartutil
 ln -s ${PWD}/tagion ${PWD}/tagionboot
 ```
+> Run it in same directory with tagion binary
+
+For tagionwave it's necesary to set:
+
+```
+export GODEBUG=cgocheck=0
+```
+
+Now we recomend to update your $PATH variable
+
+```
+export PATH=$PATH:${PWD}
+```
+> For mode1 - it's necessary to set PATH globaly, so it's visible from new opened sessions. For this you need to write bellow command to `~/.profile` or `~/.bashrc` file and 
+> ```
+> source ~/.profile 
+> or
+> source ~/.bashrc
+> ```
+
 
 ### tagionwave CLI
 Tagionwave is a CLI for the network setup and running.
