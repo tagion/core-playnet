@@ -1,9 +1,14 @@
 #!/bin/bash
 default_wallets_num=7
 wallets_number=${1:-$default_wallets_num}
-tool_precommand=${2:-"docker run --rm -v \${PWD}:/tgn/node tagion/playnet "}
-correct_command(){
-    echo ${tool_precommand//"\${PWD}"/${PWD}}
+tool_precommand="docker run --rm -v \${PWD}:/tgn/node tagion/playnet "
+docker=$2
+correct_command() {
+    if [ $docker == "--nodocker" ]; then 
+       echo ""
+    else
+       echo ${tool_precommand//"\${PWD}"/${PWD}}
+    fi
 }
 create_wallets() {
     for (( i=1; i <= $wallets_number; i++ ))
@@ -22,7 +27,6 @@ create_wallets() {
     done
 }
 
-
 mkdir -p tagion_network
 cd tagion_network
 
@@ -30,7 +34,6 @@ mkdir -p data/node0
 mkdir shared
 cd data
 cmd_tool=$(correct_command)
-# echo $cmd_tool
 $cmd_tool dartutil --initialize --dartfilename dart.drt
 cd ../
 create_wallets

@@ -2,6 +2,7 @@
 
 gnome="gnome-terminal --tab -- "
 screen="screen -S testnet -dm "
+docker=$4
 if [[ $* == *--gnome* ]] 
 then
     if ! command -v gnome-terminal &> /dev/null
@@ -29,7 +30,13 @@ mode0() {
     # else
     #     # cp ./data/dart.drt ./data/node0/dart.drt
     # fi
-    docker run -it --net host --rm -v ${PWD}:/tgn/node tagion/playnet tagionwave --dart-init=false -N $amount --dart-synchronize=true 
+
+    if [ $docker == "--nodocker" ]; then 
+        tagionwave --dart-init=false -N $amount --dart-synchronize=true 
+    else
+        docker run -it --net host --rm -v ${PWD}:/tgn/node tagion/playnet tagionwave --dart-init=false -N $amount --dart-synchronize=true 
+    fi
+    
 }
 mode1() {
     amount=$1
@@ -37,9 +44,22 @@ mode1() {
     rm -f ./shared/*
     for (( i=1; i < $amount; i++ ))
     do
-        $CONSOLE docker run -it --net host --rm -v ${PWD}/shared:/tgn/node/shared tagion/playnet tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=true --dart-synchronize=true --dart-path="./data/dart.drt" --port=400$i --transaction-port=1080$i --logger-filename=./shared/node-$i.log -N $amount
+        echo !!!!!!!!!!!!!!!!!!!!!!!
+        echo $docker
+        if [ $docker == "--nodocker" ]; then 
+            $CONSOLE tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=true --dart-synchronize=true --dart-path="./data/dart.drt" --port=400$i --transaction-port=1080$i --logger-filename=./shared/node-$i.log -N $amount
+        else
+            $CONSOLE docker run -it --net host --rm -v ${PWD}/shared:/tgn/node/shared tagion/playnet tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=true --dart-synchronize=true --dart-path="./data/dart.drt" --port=400$i --transaction-port=1080$i --logger-filename=./shared/node-$i.log -N $amount
+        fi
+        
     done
-    $CONSOLE docker run -it --net host --rm -v ${PWD}/shared:/tgn/node/shared -v ${PWD}/data:/tgn/node/data tagion/playnet tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=false --dart-synchronize=false --dart-path="./data/dart.drt" --port=4020 --transaction-port=10820 --logger-filename=./shared/node-master.log -N $amount
+
+    if [ $docker == "--nodocker" ]; then 
+        $CONSOLE tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=false --dart-synchronize=false --dart-path="./data/dart.drt" --port=4020 --transaction-port=10820 --logger-filename=./shared/node-master.log -N $amount
+    else
+        $CONSOLE docker run -it --net host --rm -v ${PWD}/shared:/tgn/node/shared -v ${PWD}/data:/tgn/node/data tagion/playnet tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=false --dart-synchronize=false --dart-path="./data/dart.drt" --port=4020 --transaction-port=10820 --logger-filename=./shared/node-master.log -N $amount
+    fi
+        
 }
 if [[ $* == *--mode1* ]]
 then
