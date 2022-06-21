@@ -133,7 +133,8 @@ After ~10-15 seconds, you can update your balance to check the transaction's com
 ```
 > You may notice that sender sends more tagions - it's a fee's
 > 
-If you see that balance has changed - congratulations :tada::tada::tada:. 
+If you see that balance has changed - congratulations :tada::tada::tada:.
+
 If it doesn't work - you can find help in our [Discord channel](https://discord.gg/x7Wcg26E)  or report an issue on GitHub [Report Issue](#report-an-issue).
 
 
@@ -170,7 +171,7 @@ There are the following CLI tools available here:
 
 #### Binary usage
 
-For binary usage - download tagion binary from the release tab. Tagion binary contains all the other binaries. For better user experience - you can create soft links with the following commands: 
+For binary usage - download tagion binary from the [release tab](https://github.com/tagion/core-playnet/releases/tag/v0.9.0). Tagion binary contains all the other binaries. For better user experience - you can create soft links with the following commands: 
 
 ```
 ln -s ${PWD}/tagion ${PWD}/tagionwave
