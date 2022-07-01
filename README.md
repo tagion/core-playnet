@@ -8,27 +8,28 @@
 #### [Changelog file](changelog.md)
 
 ## Table of contents
-- [Tagion 0.9.0 Release](#tagion-0.9.0-release)
+- [Tagion 0.9.0 release](#tagion-090-release)
+      - [Changelog file](#changelog-file)
   - [Table of contents](#table-of-contents)
-- [Simple guide ](#simple-guide)
-  - [Pre-installation](#pre-installation)
-  - [Create network structure](#create-network-structure)
-  - [Launch a network](#launch-a-network)
-  - [Make a transaction](#make-a-transaction)
-    - [Create an invoice](#create-an-invoice) 
-    - [Update the balance](#update-the-balance)
-    - [Make a payment](#make-a-payment)
-- [Advanced guide](#advanced-guide)
-  - [Preconditions](#preconditions)
-    - [Docker usage](#docker-usage)
-    - [Binary usage](#binary-usage)
-  - [tagionwave CLI](#tagionwave-cli)
-  - [tagionwallet CLI](#tagionwallet-cli)
-  - [The payment request](#the-payment-reques) 
-  - [Tagionboot CLI](#tagionboot-cli) 
-  - [Dartutil CLI](#dartutil-cli) 
-  - [The network setup](#the-network-setup)
-- [Report an issue](#report-an-issue)
+  - [Simple guide](#simple-guide)
+    - [Pre-installation](#pre-installation)
+    - [Create network structure](#create-network-structure)
+    - [Launch a network](#launch-a-network)
+    - [Make a transaction](#make-a-transaction)
+      - [Create an invoice](#create-an-invoice)
+      - [Update the balance](#update-the-balance)
+      - [Make a payment](#make-a-payment)
+  - [Advanced guide](#advanced-guide)
+    - [Preconditions](#preconditions)
+      - [Docker usage](#docker-usage)
+      - [Binary usage](#binary-usage)
+    - [tagionwave CLI](#tagionwave-cli)
+    - [tagionwallet CLI](#tagionwallet-cli)
+    - [The payment request](#the-payment-request)
+    - [Tagionboot CLI](#tagionboot-cli)
+    - [Dartutil CLI](#dartutil-cli)
+    - [The network setup](#the-network-setup)
+  - [Report an issue](#report-an-issue)
 
 
 ## Simple guide
@@ -115,10 +116,22 @@ To run it without docker you need simply move to wallet directory and run comman
 ```
 ../wallet.sh wallet_2 tagionwallet --update --amount --pin 0002 --port 10801
 ```
-> Notice: for the transactions in mode1, we use ports: 10801 - 1080N 
+> Notice: for the transactions in mode1 we use ports: 10801 - 1080N 
 > For mode0 you can use the default port - 10800
 
-Now you can see how much TGN you have on your account.
+Now you can see how much TGN you have on your account. Available - is how much tagions you can spend now. Locked - is how much tagions locked until transaction completed
+
+> IMPORTANT!
+> 
+> Your balance is a sum of your bills. When you make a transaction - needed amount of bills will be locked, so you can't make a next transaction using same bills. You may notice after transaction your `Locked: ` field changed. 
+> If you haven't sent a contract or transaction failed for some reason - you can unlock bills by next command: 
+> ```
+> tagionwallet --unlock --pin 0001
+> ```
+> or docker version:
+> ```
+> ../wallet.sh wallet_1 tagionwallet --unlock --pin 0001
+> ```
 #### Make a payment
 ```
 ../wallet.sh wallet_2 tagionwallet --pay ../wallet_1/invoice_file.hibon --send --pin 0002 --port 10801
