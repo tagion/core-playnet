@@ -184,7 +184,7 @@ There are the following CLI tools available here:
 
 #### Binary usage
 
-For binary usage - download tagion binary from the [release tab](https://github.com/tagion/core-playnet/releases/tag/v0.9.0). Tagion binary contains all the other binaries. For better user experience - you can create soft links with the following commands: 
+For binary usage - download tagion binary from the [release tab](https://github.com/tagion/core-playnet/releases/tag/v0.9.1). Tagion binary contains all the other binaries. For better user experience - you can create soft links with the following commands: 
 
 ```
 ln -s ${PWD}/tagion ${PWD}/tagionwave
