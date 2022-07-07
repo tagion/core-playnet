@@ -45,7 +45,7 @@ mode1() {
     rm -f ./shared/*
     for (( i=1; i < $amount; i++ ))
     do
-        $CONSOLE $PRECOMMAND tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=true --dart-synchronize=true --dart-path="./data/dart$i.drt" --port=400$i --transaction-port=1080$i --logger-filename=./shared/node-$i.log -N $amount        
+        $CONSOLE $PRECOMMAND tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=true --dart-synchronize=true --dart-path="./data/dart$i.drt" --port=400$i --transaction-port=$((10800+$i)) --logger-filename=./shared/node-$i.log -N $amount        
     done
 
     $CONSOLE $PRECOMMAND tagionwave --net-mode=local --boot=./shared/boot.hibon --dart-init=false --dart-synchronize=false --dart-path="./data/dart.drt" --port=4020 --transaction-port=10820 --logger-filename=./shared/node-master.log -N $amount

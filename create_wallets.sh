@@ -17,13 +17,22 @@ correct_command() {
 create_wallets() {
     for (( i=1; i <= $wallets_number; i++ ))
     do
-        echo "Creating $i wallet with pin 000$i"
+    	pin="000$i"
+    	if (( $i < 10 ))
+	then
+		pin="000$i"
+	else
+		pin="00$i"
+	fi
+	
+	echo $pin
+        echo "Creating $i wallet with pin $pin"
         mkdir -p "wallet_$i"
         cd wallet_$i
         cmd_tool=$(correct_command)
         # echo $cmd_tool
-        $cmd_tool tagionwallet --generate-wallet --questions q1,q2,q3,q4 --answers a1,a2,a3,a4 -x 000$i
-        $cmd_tool tagionwallet --create-invoice GENESIS:100000 -x 000$i
+        $cmd_tool tagionwallet --generate-wallet --questions q1,q2,q3,q4 --answers a1,a2,a3,a4 -x $pin
+        $cmd_tool tagionwallet --create-invoice GENESIS:100000 -x $pin
         $cmd_tool tagionboot invoice_file.hibon -o genesis.hibon
         cd ../
         cmd_tool=$(correct_command)
