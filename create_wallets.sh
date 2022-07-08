@@ -17,13 +17,8 @@ correct_command() {
 create_wallets() {
     for (( i=1; i <= $wallets_number; i++ ))
     do
-	pin="000$i"
-	if (( $i < 10 ))
-	then
-		pin="000$i"
-	else
-		pin="00$i"
-	fi
+
+    pin=$(seq -w 9999 | head -n $i | tail -1)
 	
 	echo "Creating $i wallet with pin $pin"
         mkdir -p "wallet_$i"
