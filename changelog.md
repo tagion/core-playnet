@@ -1,4 +1,4 @@
-# Change log 0.9.0
+# Change log 0.9.2
 
 - Options for the different part of the network has been divider up and moved to the different modules in related to the module.
 
@@ -40,6 +40,8 @@
 
 - The tools dartutil, hibonutil, tagionboot, tagionwave and tagionwallet has been re-factored to make it more readable.
 
-  
+- Show available and locked balance in wallet CLI
 
-  
+- Add unlock active bills functionality to wallet CLI
+
+- Sort data received from dart, according to data in contract

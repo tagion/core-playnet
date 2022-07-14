@@ -1,6 +1,6 @@
 <a href="https://tagion.org"><img alt="tagion logo" src="https://github.com/tagion/resources/raw/master/branding/logomark.svg?sanitize=true" alt="tagion.org" height="60"></a>
 
-# Tagion 0.9.0 release
+# Tagion 0.9.2 release
 > The Tagion network decentralizes trading and transferring between compatible cryptocurrencies and is operated by a democratic governance mechanism. The network's users essentially own and control the network, as it is open and technically accessible for everyone.
 > 
 > The network itself consists of a **gossip protocol,** which is used for data synchronization, the **hashgraph algorithm**, which provides consensus and ordering transactions, and the **sharding** **opportunity,** which lets transactions run in parallel and enhances the speed of the system.
@@ -8,7 +8,7 @@
 #### [Changelog file](changelog.md)
 
 ## Table of contents
-- [Tagion 0.9.0 release](#tagion-090-release)
+- [Tagion 0.9.2 release](#tagion-090-release)
       - [Changelog file](#changelog-file)
   - [Table of contents](#table-of-contents)
   - [Simple guide](#simple-guide)
@@ -184,7 +184,7 @@ There are the following CLI tools available here:
 
 #### Binary usage
 
-For binary usage - download tagion binary from the [release tab](https://github.com/tagion/core-playnet/releases/tag/v0.9.1). Tagion binary contains all the other binaries. For better user experience - you can create soft links with the following commands: 
+For binary usage - download tagion binary from the [release tab](https://github.com/tagion/core-playnet/releases/tag/v0.9.2). Tagion binary contains all the other binaries. For better user experience - you can create soft links with the following commands: 
 
 ```
 ln -s ${PWD}/tagion ${PWD}/tagionwave
